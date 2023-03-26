@@ -7,50 +7,53 @@
 
 import SwiftUI
 
+let vehicles = ["🚆", "🚡", "🚘", "🛳️", "🚖", "🚢", "🛫", "🚐", "🚎", "🚄", "🚑", "🚜", "🚉" , "🚲", "🚓", "🛩️"]
+let food = ["🍱", "🍚", "🍣", "🍜", "🥓", "🍖", "🍗", "🥩", "🍕", "🍝", "🍔", "🍟"]
+let flags = ["🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮"]
+
 struct ContentView: View {
-    var emojis = ["🚧", "🚆", "🚡", "🚘", "🛣️", "🛳️", "🛤️", "🚏", "🚖", "🚢", "🛫", "🚐", "🚎", "🚄", "🚑", "🛢️", "🚜", "🚦", "🚉" , "🚲", "🚥", "🚓", "🛩️", "🛑"]
-    @State var emojiCount = 6
+    @State var emojis = food
     
     var body: some View {
         VStack {
+            Text("Memorize!").font(.largeTitle)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                    ForEach(emojis, id: \.self) { emoji in
                         CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
                     }
                 }
                 .foregroundColor(.red)
             }
             Spacer()
-            HStack {
-                remove
-                Spacer()
-                add
+            HStack(alignment: .bottom, spacing: 50) {
+                Button {
+                    emojis = vehicles.shuffled()
+                } label: {
+                    VStack {
+                        Image(systemName: "car").font(.largeTitle)
+                        Text("Vehicles").font(.subheadline)
+                    }
+                }
+                Button {
+                    emojis = food.shuffled()
+                } label: {
+                    VStack {
+                        Image(systemName: "carrot").font(.largeTitle)
+                        Text("Food").font(.subheadline)
+                    }
+                }
+                Button {
+                    emojis = flags.shuffled()
+                } label: {
+                    VStack {
+                        Image(systemName: "flag").font(.largeTitle)
+                        Text("Flags").font(.subheadline)
+                    }
+                }
             }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
         .padding(.horizontal)
-        
-    }
-    
-    var remove: some View {
-        Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
-        } label: {
-            Image(systemName: "minus.circle")
-        }
-    }
-    var add: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            Image(systemName: "plus.circle")
-        }
     }
 }
 
@@ -78,6 +81,5 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.dark)
     }
 }
