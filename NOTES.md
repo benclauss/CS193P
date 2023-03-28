@@ -156,3 +156,84 @@ View Combiners (`Stack`s)
 
 `Stack` uses all size (height and width)
 `LazyVGrid` uses all horizontal space but only what it needs vertically.
+
+## [Lecture 3](https://www.youtube.com/watch?v=--qKOhdgJAs)
+
+### MVVM
+- Model-View-ViewModel
+    - A "code organizing" architectural design paradigm
+    - Must be adhered to for SwiftUI to work.
+    - It is different from MVC (Model View Controller) that UIKit (old-style iOS) uses.
+
+It is similar to MVC in that it has a **Model** and **View**.
+- View is made of `View`s.
+
+#### Model
+- UI Independent.
+- Data + Logic
+    - "what your application does"
+    - all the cards
+    - decision making
+    - what makes a match, how many points
+- "The Truth"
+- We're always going to ask the model if a card is face up.
+    - That way we don't need to worry about "truth" existing in 2 places.
+- Data flows from the Model to the View.
+
+#### View
+- Reflects the Model
+- Stateless
+    - When do we use `@State` then?
+        - Those things only have to do with how the UI is managing itself (e.g. picking a theme).
+- Declared
+- Reactive
+    - always reacting to changes in the model
+
+#### ViewModel
+- Binds View to Model
+- Interpreter
+    - ViewModel might present SQL data as an array that the View would prefer.
+    - "exactly what the view needs"
+- Gatekeeper
+    - access to the Model is well-behaved
+
+**The View must always access data from the Model via the ViewModel.**
+- ViewModel notices changes in the Model.
+- ViewModel publishes "something changed".
+    - ViewModel does not want any connections to View.
+- View automatically observes publications, pulls data and rebuilds.
+
+**What about the other direction?**
+- ViewModel has additional responsibility of processing intent.
+- View calls Intent function.
+- ViewModel modifies the Model.
+
+### Swift Type System
+
+#### struct and class
+- Both have pretty much the same syntax.
+- Both have
+    - stored `var`s
+    - computed `var` (e.g. `body`)
+    - constant `let`s
+    - `func`tions
+    - `init`ializers (special functions called when creating a `struct` or `class`)
+        - can have as many as you want
+- So, what's the difference?
+
+| struct | class |
+| --- | --- |
+| Value type | Reference type |
+| Copied when passed or assigned | Passed around via pointers |
+| Copy on write | Automatically reference counted |
+| Functional programming | Object-oriented programming |
+| No inheritance | Inheritance (single) |
+| "Free" `init` initializes ALL `var`s | "Free" `init` initializes NO `var`s |
+| Mutability must be explicitly stated | Always mutable |
+| Your "go to" data structure | Used in specific circumstances |
+| Everything seen so far is a `struct` (except `View` which is a protocol) | The ViewModel in MVVM is always a `class` (also, `UIKit` (old style iOS) is `class`-based)
+
+#### Generics
+
+#### functions
+- can have internal and external labels, in that order
