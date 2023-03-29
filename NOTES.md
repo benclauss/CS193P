@@ -235,5 +235,26 @@ It is similar to MVC in that it has a **Model** and **View**.
 
 #### Generics
 
+- Sometimes we just don't care
+    - We may want to manipulate data structures that are "type agnostic" about.
+    - In other words, we don't know what type something is and we don't care.
+    - But Swift is a strongly-typed language, so we don't use variables and such that are "untyped".
+    - So how do we specify the type of something when we don't care what type it is?
+    - We use a "don't care" type (we call this feature "generics")...
+- Example of a user of a "don't care" type: Array
+    - An Array contains a bunch of things and it doesn't care at all what type they are!
+
+```
+struct Array<Element> {
+    ...
+    func append(_ element: Element) { ... }
+}
+```
+- The type of the argument to append is Element. A "don't care" type.
+- Array's implementation of append knows nothing about that argument and it does not care
+- Element is not any known struct or class or protocol, it's just a placeholder for a type.
+
+Swift combines Generics with protocols!
+
 #### functions
 - can have internal and external labels, in that order
