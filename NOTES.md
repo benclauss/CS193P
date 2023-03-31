@@ -9,11 +9,12 @@ import SwiftUI // "UI stuff"
 
 struct ContentView: View {
     var body: some View { // This is a function! value of body is evaluated function
-        Text("Hello, CS193p!") 
+        Text("Hello, CS193p!")
             .padding()
     }
 }
 ```
+
 - We can have both variables and functions in structs.
   - This probably sounds like OOP.
   - Swift supports OOP
@@ -22,11 +23,12 @@ struct ContentView: View {
 
 - `struct ContentView: View` - This `struct` behaves like a `View`.
 - "double edge sword"
-	- get everything a `View` gets
-	- You have to do everything a `View` does.
-		- define `body`
+  - get everything a `View` gets
+  - You have to do everything a `View` does.
+    - define `body`
 
 A **View** is just a rectangular area on screen.
+
 - can display text
 - receive input via touch
 - can set color
@@ -43,11 +45,11 @@ Lego analogy
 
 If a function argument is not obvious, use a label (stems from Objective C).
 
-
 ## [Lecture 2](https://youtu.be/3lahkdHEhW8)
 
 We can use an `HStack` to add multiple cards.
 We want to DRY our code.
+
 > Create a dining room chair LEGO.
 
 In SwiftUI, we want our UIs to be small.
@@ -69,6 +71,7 @@ struct CardView: View {
 
 In iOS 13, Apple introduced "Dark" and "Light" mode.
 We can customize our preview.
+
 ```swift
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -76,7 +79,9 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 ```
+
 This controls our preview.
+
 - We can add modifiers to `ContentView()`.
 - We can add multiple ContentViews to compare simultaneously.
 
@@ -87,6 +92,7 @@ We can't "create the racetrack" and fill it for `RoundedRectangle`.
 We can add logic to `View`.
 
 **Variables must always have a value!**
+
 - A function can return the value.
 
 ```swift
@@ -114,7 +120,7 @@ Defaults within `struct` can be overwritten.
     }
 ```
 
-`var` is variable. 
+`var` is variable.
 `let` is for constants.
 
 **Tap Gestures**
@@ -135,6 +141,7 @@ We don't use this very often.
 `var emojis: = ["🚡", "🚋", "🚃", "🚠"]`
 
 **List Indexing**
+
 ```swift
        HStack {
             ForEach(emojis[0..<5], id: \.self) { emoji in
@@ -147,12 +154,13 @@ https://developer.apple.com/sf-symbols/
 
 **Review**
 Build structures that behave like View.
+
 - functional underpinning of Swift
 - We will combine with OO next week.
-A view is a rectangular area on screen that provides enormous power.
-We can combine views to build complicated user interfaces.
-View Combiners (`Stack`s)
-`ForEach`s
+  A view is a rectangular area on screen that provides enormous power.
+  We can combine views to build complicated user interfaces.
+  View Combiners (`Stack`s)
+  `ForEach`s
 
 `Stack` uses all size (height and width)
 `LazyVGrid` uses all horizontal space but only what it needs vertically.
@@ -160,50 +168,57 @@ View Combiners (`Stack`s)
 ## [Lecture 3](https://www.youtube.com/watch?v=--qKOhdgJAs)
 
 ### MVVM
+
 - Model-View-ViewModel
-    - A "code organizing" architectural design paradigm
-    - Must be adhered to for SwiftUI to work.
-    - It is different from MVC (Model View Controller) that UIKit (old-style iOS) uses.
+  - A "code organizing" architectural design paradigm
+  - Must be adhered to for SwiftUI to work.
+  - It is different from MVC (Model View Controller) that UIKit (old-style iOS) uses.
 
 It is similar to MVC in that it has a **Model** and **View**.
+
 - View is made of `View`s.
 
 #### Model
+
 - UI Independent.
 - Data + Logic
-    - "what your application does"
-    - all the cards
-    - decision making
-    - what makes a match, how many points
+  - "what your application does"
+  - all the cards
+  - decision making
+  - what makes a match, how many points
 - "The Truth"
 - We're always going to ask the model if a card is face up.
-    - That way we don't need to worry about "truth" existing in 2 places.
+  - That way we don't need to worry about "truth" existing in 2 places.
 - Data flows from the Model to the View.
 
 #### View
+
 - Reflects the Model
 - Stateless
-    - When do we use `@State` then?
-        - Those things only have to do with how the UI is managing itself (e.g. picking a theme).
+  - When do we use `@State` then?
+    - Those things only have to do with how the UI is managing itself (e.g. picking a theme).
 - Declared
 - Reactive
-    - always reacting to changes in the model
+  - always reacting to changes in the model
 
 #### ViewModel
+
 - Binds View to Model
 - Interpreter
-    - ViewModel might present SQL data as an array that the View would prefer.
-    - "exactly what the view needs"
+  - ViewModel might present SQL data as an array that the View would prefer.
+  - "exactly what the view needs"
 - Gatekeeper
-    - access to the Model is well-behaved
+  - access to the Model is well-behaved
 
 **The View must always access data from the Model via the ViewModel.**
+
 - ViewModel notices changes in the Model.
 - ViewModel publishes "something changed".
-    - ViewModel does not want any connections to View.
+  - ViewModel does not want any connections to View.
 - View automatically observes publications, pulls data and rebuilds.
 
 **What about the other direction?**
+
 - ViewModel has additional responsibility of processing intent.
 - View calls Intent function.
 - ViewModel modifies the Model.
@@ -211,38 +226,39 @@ It is similar to MVC in that it has a **Model** and **View**.
 ### Swift Type System
 
 #### struct and class
+
 - Both have pretty much the same syntax.
 - Both have
-    - stored `var`s
-    - computed `var` (e.g. `body`)
-    - constant `let`s
-    - `func`tions
-    - `init`ializers (special functions called when creating a `struct` or `class`)
-        - can have as many as you want
+  - stored `var`s
+  - computed `var` (e.g. `body`)
+  - constant `let`s
+  - `func`tions
+  - `init`ializers (special functions called when creating a `struct` or `class`)
+    - can have as many as you want
 - So, what's the difference?
 
-| struct | class |
-| --- | --- |
-| Value type | Reference type |
-| Copied when passed or assigned | Passed around via pointers |
-| Copy on write | Automatically reference counted |
-| Functional programming | Object-oriented programming |
-| No inheritance | Inheritance (single) |
-| "Free" `init` initializes ALL `var`s | "Free" `init` initializes NO `var`s |
-| Mutability must be explicitly stated | Always mutable |
-| Your "go to" data structure | Used in specific circumstances |
-| Everything seen so far is a `struct` (except `View` which is a protocol) | The ViewModel in MVVM is always a `class` (also, `UIKit` (old style iOS) is `class`-based)
+| struct                                                                   | class                                                                                      |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Value type                                                               | Reference type                                                                             |
+| Copied when passed or assigned                                           | Passed around via pointers                                                                 |
+| Copy on write                                                            | Automatically reference counted                                                            |
+| Functional programming                                                   | Object-oriented programming                                                                |
+| No inheritance                                                           | Inheritance (single)                                                                       |
+| "Free" `init` initializes ALL `var`s                                     | "Free" `init` initializes NO `var`s                                                        |
+| Mutability must be explicitly stated                                     | Always mutable                                                                             |
+| Your "go to" data structure                                              | Used in specific circumstances                                                             |
+| Everything seen so far is a `struct` (except `View` which is a protocol) | The ViewModel in MVVM is always a `class` (also, `UIKit` (old style iOS) is `class`-based) |
 
 #### Generics
 
 - Sometimes we just don't care
-    - We may want to manipulate data structures that are "type agnostic" about.
-    - In other words, we don't know what type something is and we don't care.
-    - But Swift is a strongly-typed language, so we don't use variables and such that are "untyped".
-    - So how do we specify the type of something when we don't care what type it is?
-    - We use a "don't care" type (we call this feature "generics")...
+  - We may want to manipulate data structures that are "type agnostic" about.
+  - In other words, we don't know what type something is and we don't care.
+  - But Swift is a strongly-typed language, so we don't use variables and such that are "untyped".
+  - So how do we specify the type of something when we don't care what type it is?
+  - We use a "don't care" type (we call this feature "generics")...
 - Example of a user of a "don't care" type: Array
-    - An Array contains a bunch of things and it doesn't care at all what type they are!
+  - An Array contains a bunch of things and it doesn't care at all what type they are!
 
 ```
 struct Array<Element> {
@@ -250,6 +266,7 @@ struct Array<Element> {
     func append(_ element: Element) { ... }
 }
 ```
+
 - The type of the argument to append is Element. A "don't care" type.
 - Array's implementation of append knows nothing about that argument and it does not care
 - Element is not any known struct or class or protocol, it's just a placeholder for a type.
@@ -257,4 +274,21 @@ struct Array<Element> {
 Swift combines Generics with protocols!
 
 #### functions
+
+- You can declare a variable (or parameter to a func or whatever) to be of type "function".
+- The syntax for this includes the types of the arguments and return value.
+- You can do this anywhere any other type is allowed.
 - can have internal and external labels, in that order
+
+##### Closures
+
+- It's so common to pass functions around that we are very often "inlining" them.
+- We'll call such an inlined function a "closure" and there's special language support for it.
+
+`import Foundation`
+
+- Array, String, Dictionary
+
+`struct`s can be nested.
+
+`private(set)` You can look but not touch.
