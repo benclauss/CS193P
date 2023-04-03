@@ -262,8 +262,8 @@ It is similar to MVC in that it has a **Model** and **View**.
 
 ```
 struct Array<Element> {
-    ...
-    func append(_ element: Element) { ... }
+	...
+	func append(_ element: Element) { ... }
 }
 ```
 
@@ -292,3 +292,30 @@ Swift combines Generics with protocols!
 `struct`s can be nested.
 
 `private(set)` You can look but not touch.
+
+Swift only has `for` `in`.
+
+```swift
+for pairIndex in 0..<numberOfPairsOfCards {
+
+}
+```
+
+Use type inference when defining vars/lets.
+Use `in` when defining functions inline.
+
+```swift
+MemoryGame<String>(numberOfPairsOfCards: 4, createCardContent: { (index: Int) -> String in
+	return "😀"
+})
+```
+
+```swift
+static let emojis = ["🚧", "🚆", "🚡", "🚘", "🛣️", "🛳️", "🛤️", "🚏", "🚖", "🚢", "🛫", "🚐", "🚎", "🚄", "🚑", "🛢️", "🚜", "🚦", "🚉" , "🚲", "🚥", "🚓", "🛩️", "🛑"]
+```
+
+Functions can also be static.
+This can be useful for avoiding polluting the global namespace.
+
+`.largeTitle` and `.white` are static members of `Font` and `Color`.
+Type inference prevents the need to explicitly state prefix.
