@@ -319,3 +319,7 @@ This can be useful for avoiding polluting the global namespace.
 
 `.largeTitle` and `.white` are static members of `Font` and `Color`.
 Type inference prevents the need to explicitly state prefix.
+
+## [Lecture 4](https://www.youtube.com/watch?v=oWZOFSYS5GE)
+
+- `print` statements only work with simulator.
