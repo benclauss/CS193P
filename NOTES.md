@@ -323,3 +323,72 @@ Type inference prevents the need to explicitly state prefix.
 ## [Lecture 4](https://www.youtube.com/watch?v=oWZOFSYS5GE)
 
 - `print` statements only work with simulator.
+- Arguments to functions are `let`s.
+- `cards[index]` **copies**.
+- `ObservableObject` publishes "will change".
+  - Call `objectWillChange`.
+- `@Published` will do this automatically.
+- `@ObservedObject` will reuild thing when it changes (i.e. in view).
+
+### enum
+
+- Another variety of data structure in addition to struct and class
+  - It can only have discrete states.
+  - An enum is a value type (like struct), so it is copied as it is passed around.
+- Each state can (but does not have to) have its own associated data.
+- Fields do not have to have labels.
+- An enum's state is usually checked with a `switch` statement
+- A Switch must hanle all possible cases (although you can `default` uninteresting cases)
+- Switch works on other types.
+- Each case in a switch can be a multiple lines and does **not** fall through to the next case.
+  - You can fallthrough explicitly.
+- Associated data is accessed through a switch statement using `let` syntax.
+  - You can retrieve associated data using a different name.
+- Methods and Properties
+  - but **not stored properties**
+  - In an enum's own method, you can test the enum's state (and get associated data) using `self`
+- Getting all the cases of an enumeration
+  - a static var `allCases` that you can iterate over
+- `Size` was an enum with associated data.
+  - Some had default values.
+- Labels are also optional.
+
+### Optionals
+
+- An Optional is just an enum. Period, nothing more.
+- You can see that it can only have two values: is set (some) or not set (none)
+  - In the set case, it has some associated value.
+- Swift introduces a lot of "syntactic sugar" to make it easy to use Optionals.
+- Delcaring something of type `Optional<T>` can be done with the syntax `T?`.
+- You can assign it the value `nil` (`Optional.`none).
+- Or you can it assign it something of the type T (`Optional.some` with associated value)
+- always start out with an implicit `= nil`
+- You can access the associated value
+  - by force with `!` (will crash program)
+  - `if let safehello = hello { ... } else { ... }`
+- There's also `??` which does "Optional defaulting". It's called the "nil-coalescing operator".
+- Optional chaining
+  - `x?.foo()?.bar?.z`
+
+### Review
+
+- MVVM
+  - Models
+    - UI-Independent
+    - no reference to Views
+    - data and logic
+    - "the truth"
+  - View
+    - reflect the Model
+    - Remove `@State` (in model)
+    - declarative
+    - reactive
+  - ViewModel
+    - binds View to Model
+    - interpretation
+    - "gatekeeper"
+      - keeps Model private
+    - enables reactive architecture
+  - MemoryGame is a struct.
+    - Swift can identify changes and notify world.
+    - `@Published`, `@ObservableObject`
